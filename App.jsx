@@ -12,14 +12,15 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MyRecipe from './src/MyRecipe';
-import ListRecipe from './src/ListRecipe';
-import DetailRecipe from './src/DetailRecipe';
+import AddMenu from './src/AddMenu';
+import Home from './src/Home';
+import DetailMenu from './src/DetailMenu';
+import ListMenu from './src/ListMenu';
 
-function HomeScreen({navigation}) {
+function Chat({navigation}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
+      <Text>Chat Screen</Text>
       <Button
         title="Go to Details"
         onPress={() => navigation.navigate('Details')}
@@ -28,7 +29,7 @@ function HomeScreen({navigation}) {
   );
 }
 
-function ProfileScreen({navigation}) {
+function Profile({navigation}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Profile Screen</Text>
@@ -56,100 +57,105 @@ function DetailsScreen({route, navigation}) {
 }
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
-// const Tab = createMaterialBottomTabNavigator();
 
-function Home() {
+function Main() {
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
-        component={HomeScreen}
+        component={Home}
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="Details"
-        component={DetailsScreen}
+        name="DetailMenu"
+        component={DetailMenu}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ListMenu"
+        component={ListMenu}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
 }
 
-function Recipe() {
-  return (
-    <Stack.Navigator initialRouteName="ListRecipe">
-      <Stack.Screen
-        name="ListRecipe"
-        component={ListRecipe}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="DetailRecipe"
-        component={DetailRecipe}
-        options={{
-          headerShown: false,
-          tabBarStyle: {display: 'none'},
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
+const Tab = createBottomTabNavigator();
+// const Tab = createMaterialBottomTabNavigator();
 
 function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName="Main"
-        screenOptions={{headerShown: false}}>
+        screenOptions={{
+          headerShown: false,
+          tabBarActiveTintColor: '#EFC81A',
+          tabBarInactiveTintColor: 'grey',
+          tabBarActiveBackgroundColor: 'rgba(109, 97, 242, 0.05)',
+          tabBarStyle: {
+            height: 70,
+          },
+          tabBarLabelStyle: {
+            display: 'none',
+          },
+        }}>
         <Tab.Screen
           name="Main"
-          component={Home}
-          options={({route}) => ({
+          component={Main}
+          options={{
             tabBarLabel: 'Main',
             tabBarIcon: ({color}) => (
-              <Ionicons name="home" color={color} size={26} />
+              <Ionicons name="home-outline" color={color} size={26} />
             ),
-            tabBarStyle: (route => {
-              const routeName = getFocusedRouteNameFromRoute(route) ?? '';
-              console.log(routeName);
-              if (routeName === 'Details') {
-                return {
-                  display: 'none',
-                  position: 'absolute',
-                };
-              }
-              return;
-            })(route),
-          })}
+            // unmountOnBlur: true,
+          }}
+          // options={({route}) => ({
+          //   tabBarLabel: 'Main',
+          //   tabBarIcon: ({color}) => (
+          //     <Ionicons name="home-outline" color={color} size={26} />
+          //   ),
+          //   tabBarStyle: (route => {
+          //     const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+          //     console.log(routeName);
+          //     if (routeName === 'Details') {
+          //       return {
+          //         display: 'none',
+          //       };
+          //     }
+          //     return {
+          //       height: 70,
+          //     };
+          //   })(route),
+          // })}
         />
         <Tab.Screen
-          name="Recipe"
-          component={Recipe}
+          name="AddMenu"
+          component={AddMenu}
           options={{
-            tabBarLabel: 'Recipe',
+            tabBarLabel: 'AddMenu',
             tabBarIcon: ({color}) => (
-              <Ionicons name="apps" color={color} size={26} />
+              <Ionicons name="add-circle-outline" color={color} size={26} />
             ),
           }}
         />
         <Tab.Screen
-          name="MyRecipe"
-          component={MyRecipe}
+          name="Chat"
+          component={Chat}
           options={{
-            tabBarLabel: 'MyRecipe',
+            tabBarLabel: 'Chat',
             tabBarIcon: ({color}) => (
-              <Ionicons name="menu" color={color} size={26} />
+              <Ionicons name="chatbubble-outline" color={color} size={26} />
             ),
           }}
         />
         <Tab.Screen
           name="Profile"
-          component={ProfileScreen}
+          component={Profile}
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({color}) => (
-              <Ionicons name="person-circle-outline" color={color} size={26} />
+              <Ionicons name="person-outline" color={color} size={26} />
             ),
           }}
         />
