@@ -44,7 +44,7 @@ const Regist = ({navigation}) => {
         <View
           style={{
             backgroundColor: 'white',
-            height: '5%',
+            height: '10%',
             borderTopRightRadius: 20,
             borderTopLeftRadius: 20,
           }}

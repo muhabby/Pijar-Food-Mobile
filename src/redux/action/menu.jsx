@@ -125,31 +125,3 @@ export const getMenuUserId = user_id => async (dispatch, getState) => {
     dispatch({type: 'GET_MENU_ERROR'});
   }
 };
-
-export const updateUser =
-  (id, data, navigation) => async (dispatch, getState) => {
-    try {
-      dispatch({type: 'UPDATE_MENU_PENDING'});
-      let token = getState().auth.data.token;
-
-      const res = await axios.put(base_url + '/users/' + id, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('res');
-      console.log(res);
-
-      dispatch({type: 'UPDATE_MENU_SUCCESS', payload: res.data});
-      navigation.goBack();
-    } catch (err) {
-      console.log('err');
-      console.log(err);
-      console.log(err?.message ? err.message : err);
-      dispatch({
-        type: 'UPDATE_MENU_ERROR',
-        payload: err?.response?.data?.message ?? 'update menu error',
-      });
-    }
-  };

@@ -11,6 +11,7 @@ import {
   TouchableHighlight,
   Alert,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
@@ -35,7 +36,7 @@ const DetailMenu = ({route, navigation}) => {
   useFocusEffect(
     React.useCallback(() => {
       dispatch(getMenuDetail(route?.params.id));
-    }, [dispatch]),
+    }, []),
   );
 
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -264,18 +265,11 @@ const DetailMenu = ({route, navigation}) => {
           </View>
         ) : (
           // Loading
-          <View style={{padding: 30}}>
-            <View style={styles.loading}>
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: '#505050',
-                  fontFamily: 'Poppins-Medium',
-                }}>
-                Loading...
-              </Text>
-            </View>
-          </View>
+          <ActivityIndicator
+            size={50}
+            color="#EFC81A"
+            style={{paddingTop: 30}}
+          />
         )}
       </ScrollView>
     </MenuProvider>

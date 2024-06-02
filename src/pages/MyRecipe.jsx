@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect} from 'react';
@@ -10,6 +11,7 @@ import {
   ScrollView,
   Image,
   TouchableHighlight,
+  ActivityIndicator,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
@@ -21,12 +23,12 @@ const MyRecipe = ({route, navigation}) => {
 
   useEffect(() => {
     dispatch(getMenuUserId(route?.params?.user_id));
-  }, [dispatch, route?.params?.user_id]);
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
       dispatch(getMenuUserId(route?.params?.user_id));
-    }, [dispatch, route?.params?.user_id]),
+    }, []),
   );
 
   return (
@@ -43,7 +45,7 @@ const MyRecipe = ({route, navigation}) => {
         </TouchableOpacity>
         <Text
           style={{
-            fontSize: 17,
+            fontSize: 20,
             color: '#EFC81A',
             fontFamily: 'Poppins-Medium',
             justifyContent: 'center',
@@ -136,16 +138,7 @@ const MyRecipe = ({route, navigation}) => {
           })}
         </ScrollView>
       ) : (
-        <View style={styles.loading}>
-          <Text
-            style={{
-              fontSize: 12,
-              color: '#505050',
-              fontFamily: 'Poppins-Medium',
-            }}>
-            Loading...
-          </Text>
-        </View>
+        <ActivityIndicator size={50} color="#EFC81A" style={{paddingTop: 20}} />
       )}
     </View>
   );

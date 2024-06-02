@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {Picker} from '@react-native-picker/picker';
 import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Image,
   PermissionsAndroid,
   ScrollView,
@@ -21,7 +22,7 @@ import {getMenuDetail, updateMenu} from '../redux/action/menu';
 
 const EditMenu = ({route, navigation}) => {
   const menu_detail = useSelector(state => state.menu_detail);
-  // const menu_update = useSelector(state => state.menu_update);
+  const menu_update = useSelector(state => state.menu_update);
   const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [photo, setPhoto] = useState(null);
@@ -47,7 +48,7 @@ const EditMenu = ({route, navigation}) => {
 
   useEffect(() => {
     dispatch(getMenuDetail(route?.params.id));
-  }, [dispatch, route?.params.id]);
+  }, []);
 
   const updateData = event => {
     let bodyData = new FormData();
@@ -349,18 +350,7 @@ const EditMenu = ({route, navigation}) => {
         </View>
       ) : (
         // Loading
-        <View style={{paddingVertical: 30}}>
-          <View style={styles.loading}>
-            <Text
-              style={{
-                fontSize: 12,
-                color: '#505050',
-                fontFamily: 'Poppins-Medium',
-              }}>
-              Loading...
-            </Text>
-          </View>
-        </View>
+        <ActivityIndicator size={50} color="#EFC81A" style={{paddingTop: 30}} />
       )}
     </ScrollView>
   );

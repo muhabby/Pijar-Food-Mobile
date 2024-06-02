@@ -10,6 +10,7 @@ import {
   ScrollView,
   Image,
   TouchableHighlight,
+  ActivityIndicator,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
@@ -43,13 +44,13 @@ const ListMenu = ({route, navigation}) => {
         </TouchableOpacity>
         <Text
           style={{
-            fontSize: 17,
+            fontSize: 20,
             color: '#EFC81A',
             fontFamily: 'Poppins-Medium',
             justifyContent: 'center',
-            // backgroundColor: 'red',
+            alignItems: 'center',
           }}>
-          Popular Menu
+          List Menu
         </Text>
         <View>
           <Ionicons name="chevron-back-outline" color="white" size={28} />
@@ -136,16 +137,8 @@ const ListMenu = ({route, navigation}) => {
           })}
         </ScrollView>
       ) : (
-        <View style={styles.loading}>
-          <Text
-            style={{
-              fontSize: 12,
-              color: '#505050',
-              fontFamily: 'Poppins-Medium',
-            }}>
-            Loading...
-          </Text>
-        </View>
+        // Loading
+        <ActivityIndicator size={50} color="#EFC81A" style={{paddingTop: 30}} />
       )}
     </View>
   );
