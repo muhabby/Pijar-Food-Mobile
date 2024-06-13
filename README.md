@@ -1,7 +1,5 @@
 <div id="top"></div>
 
-<!-- PROJECT LOGO -->
-
 <div align="center">
   <h3 align="center">Pijar Food Mobile</h3>
   
@@ -17,8 +15,6 @@
     <a href="https://github.com/muhabby/Pijar-Food-Mobile/issues">Feature Request</a>
   </p>
 </div>
-
-<!-- TABLE OF CONTENTS -->
 
 ## Table of Contents
 
@@ -67,35 +63,30 @@ Before going to the installation stage there are some software that must be inst
 
 ### Installation
 
-- Clone the repo
+- Clone Repository
 
 ```sh
 git clone https://github.com/muhabby/Pijar-Food-Mobile.git
-
 ```
 
 - Install Module
 ```sh
 npm install
-
 ```
 
 - Setup .env
 ```sh
 BASE_URL = "api url"
-
 ```
 
 - Start the metro server
 ```sh
 npm start
-
 ```
 
 - Start the application
 ```sh
 npm run android
-
 ```
 
 ## Screenshoots
@@ -165,8 +156,8 @@ Contributions that make the open source community the best place to learn and cr
 
 ## Related Project
 
-- [`Pijar Food Mobile Download`](https://drive.google.com/file/d/1K99DPe7h_4NGWsueDqpKEDLqm2gAZC0B/view?usp=sharing)
-- [`Pijar Food Backend Repository`](https://github.com/muhabby/BE-Pijar-Food)
+- [Pijar Food Mobile Download](https://drive.google.com/file/d/1K99DPe7h_4NGWsueDqpKEDLqm2gAZC0B/view?usp=sharing)
+- [Pijar Food Backend Repository](https://github.com/muhabby/BE-Pijar-Food)
 
 ## Contact
 
