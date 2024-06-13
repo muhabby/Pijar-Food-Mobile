@@ -52,8 +52,6 @@ Developers know that the app is still under development so many features need im
 
 ### Built With
 
-This app was built with some technologies below:
-
 - [React Native](https://reactnative.dev/)
 - [React Navigation](https://reactnavigation.org/)
 - [Axios](https://axios-http.com/)
@@ -65,7 +63,7 @@ This app was built with some technologies below:
 
 Before going to the installation stage there are some software that must be installed first.
 
-- [NodeJs](https://nodejs.org/en/download/)
+- [Node.Js](https://nodejs.org/en/download/)
 
 ### Installation
 
@@ -94,7 +92,7 @@ npm start
 
 ```
 
-- Start your application
+- Start the application
 ```sh
 npm run android
 
@@ -104,53 +102,53 @@ npm run android
 
 <p align="center" display=flex>
     <table>
-        <tr>
+        <tr align="center">
             <td>Login</td>
             <td>Regist</td>
         </tr>
-        <tr>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246832/pijar-food-assets/ss-pijar-food-mobile/Login_a1jtof.jpg" alt="Login" width=100%></td>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246835/pijar-food-assets/ss-pijar-food-mobile/Regist_bahd05.jpg" alt="Regist" width=100%/></td>
+        <tr align="center">
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246832/pijar-food-assets/ss-pijar-food-mobile/Login_a1jtof.jpg" alt="Login" width=50%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246835/pijar-food-assets/ss-pijar-food-mobile/Regist_bahd05.jpg" alt="Regist" width=50%/></td>
         </tr>
-        <tr>
+        <tr align="center">
             <td>Home</td>
             <td>Search Recipe</td>
         </tr>
-        <tr>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246832/pijar-food-assets/ss-pijar-food-mobile/Home_uetjuc.jpg" alt="Home" width=100%></td>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246832/pijar-food-assets/ss-pijar-food-mobile/Search_bh21yc.jpg" alt="Search Recipe" width=100%/></td>
+        <tr align="center">
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246832/pijar-food-assets/ss-pijar-food-mobile/Home_uetjuc.jpg" alt="Home" width=50%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246832/pijar-food-assets/ss-pijar-food-mobile/Search_bh21yc.jpg" alt="Search Recipe" width=50%/></td>
         </tr>
-        <tr>
+        <tr align="center">
             <td>Add Recipe</td>
             <td>Profile</td>
         </tr>
-        <tr>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246827/pijar-food-assets/ss-pijar-food-mobile/Add_Recipe_b1safs.jpg" alt="Add Recipe" width=100%></td>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246833/pijar-food-assets/ss-pijar-food-mobile/Profile_jnqm3y.jpg" alt="Profile" width=100%/></td>
+        <tr align="center">
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246827/pijar-food-assets/ss-pijar-food-mobile/Add_Recipe_b1safs.jpg" alt="Add Recipe" width=50%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246833/pijar-food-assets/ss-pijar-food-mobile/Profile_jnqm3y.jpg" alt="Profile" width=50%/></td>
         </tr>
-        <tr>
+        <tr align="center">
             <td>Detail Recipe</td>
             <td>List Recipes</td>
         </tr>
-        <tr>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/Detail_Recipe_gxt7by.jpg" alt="Detail Recipe" width=100%></td>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/List_Recipes_bvjtqr.jpg" alt="List Recipe" width=100%/></td>
+        <tr align="center">
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/Detail_Recipe_gxt7by.jpg" alt="Detail Recipe" width=50%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/List_Recipes_bvjtqr.jpg" alt="List Recipe" width=50%/></td>
         </tr>
-        <tr>
+        <tr align="center">
             <td>Filter Recipes by Category</td>
             <td>Edit Profile</td>
         </tr>
-        <tr>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246828/pijar-food-assets/ss-pijar-food-mobile/Filter_Recipes_k5ibzu.jpg" alt="Filter Recipe by Category" width=100%></td>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/Edit_Profile_nim0bq.jpg" alt="Edit Profile" width=100%/></td>
+        <tr align="center"> 
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246828/pijar-food-assets/ss-pijar-food-mobile/Filter_Recipes_k5ibzu.jpg" alt="Filter Recipe by Category" width=50%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/Edit_Profile_nim0bq.jpg" alt="Edit Profile" width=50%/></td>
         </tr>
-        <tr>
+        <tr align="center">
             <td>My Recipes</td>
             <td>Edit & Delete Recipe</td>
         </tr>
-        <tr>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718247466/pijar-food-assets/ss-pijar-food-mobile/My_Recipes_o182w0.jpg" alt="My Recipe" width=100%></td>
-            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/Edit_Delete_Recipe_ai70z8.jpg" alt="Edit & Delete Recipe" width=100%/></td>
+        <tr align="center">
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718247466/pijar-food-assets/ss-pijar-food-mobile/My_Recipes_o182w0.jpg" alt="My Recipe" width=50%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/Edit_Delete_Recipe_ai70z8.jpg" alt="Edit & Delete Recipe" width=50%/></td>
         </tr>
     </table>  
 </p>
