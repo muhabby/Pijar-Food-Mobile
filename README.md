@@ -1,79 +1,177 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+<div id="top"></div>
 
-# Getting Started
+<!-- PROJECT LOGO -->
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+<div align="center">
+  <h3 align="center">Pijar Food Mobile</h3>
+  
+  <a href="">
+    <image align="center" width="200" src='https://res.cloudinary.com/dpasid4jl/image/upload/v1717380554/pijar-food-assets/pijar-food-logo/Pijar_Food_Logo_pwadca.png' />
+  </a>
 
-## Step 1: Start the Metro Server
+  <p></p>
+  
+  <p align="center">
+    <a href="https://github.com/muhabby/Pijar-Food-Mobile/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/muhabby/Pijar-Food-Mobile/issues">Feature Request</a>
+  </p>
+</div>
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+<!-- TABLE OF CONTENTS -->
 
-To start Metro, run the following command from the _root_ of your React Native project:
+## Table of Contents
 
-```bash
-# using npm
+<div>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#screenshoots">Screenshots</a></li>
+    <li><a href="#contribution">Contribution</a></li>
+    <li><a href="#related-project">Related Project</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</div>
+
+## About The Project
+
+**Pijar Food Mobile** is a mobile application for users to share recipes with each other. It offers features for uploading, editing, and deleting recipes, as well as viewing recipes created by other users. The app also includes an authentication system to ensure user data is secure, allowing only registered users to access it. Currently, the application is only available for Android, you can download it through this link [Pijar Food Mobile](https://drive.google.com/file/d/1K99DPe7h_4NGWsueDqpKEDLqm2gAZC0B/view?usp=sharing)
+
+Developers know that the app is still under development so many features need improvement to enhance the user experience. These improvements include adding features like saved recipes, liked recipes, and other features. The project will continue to receive regular updates to address these needs and improve the overall user experience.
+
+### Built With
+
+This app was built with some technologies below:
+
+- [React Native](https://reactnative.dev/)
+- [React Navigation](https://reactnavigation.org/)
+- [Axios](https://axios-http.com/)
+- [React Redux](https://react-redux.js.org/)
+
+## Getting Started
+
+### Prerequisites
+
+Before going to the installation stage there are some software that must be installed first.
+
+- [NodeJs](https://nodejs.org/en/download/)
+
+### Installation
+
+- Clone the repo
+
+```sh
+git clone https://github.com/muhabby/Pijar-Food-Mobile.git
+
+```
+
+- Install Module
+```sh
+npm install
+
+```
+
+- Setup .env
+```sh
+BASE_URL = "api url"
+
+```
+
+- Start the metro server
+```sh
 npm start
 
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
+- Start your application
+```sh
 npm run android
 
-# OR using Yarn
-yarn android
 ```
 
-### For iOS
+## Screenshoots
 
-```bash
-# using npm
-npm run ios
+<p align="center" display=flex>
+    <table>
+        <tr>
+            <td>Login</td>
+            <td>Regist</td>
+        </tr>
+        <tr>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246832/pijar-food-assets/ss-pijar-food-mobile/Login_a1jtof.jpg" alt="Login" width=100%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246835/pijar-food-assets/ss-pijar-food-mobile/Regist_bahd05.jpg" alt="Regist" width=100%/></td>
+        </tr>
+        <tr>
+            <td>Home</td>
+            <td>Search Recipe</td>
+        </tr>
+        <tr>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246832/pijar-food-assets/ss-pijar-food-mobile/Home_uetjuc.jpg" alt="Home" width=100%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246832/pijar-food-assets/ss-pijar-food-mobile/Search_bh21yc.jpg" alt="Search Recipe" width=100%/></td>
+        </tr>
+        <tr>
+            <td>Add Recipe</td>
+            <td>Profile</td>
+        </tr>
+        <tr>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246827/pijar-food-assets/ss-pijar-food-mobile/Add_Recipe_b1safs.jpg" alt="Add Recipe" width=100%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246833/pijar-food-assets/ss-pijar-food-mobile/Profile_jnqm3y.jpg" alt="Profile" width=100%/></td>
+        </tr>
+        <tr>
+            <td>Detail Recipe</td>
+            <td>List Recipes</td>
+        </tr>
+        <tr>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/Detail_Recipe_gxt7by.jpg" alt="Detail Recipe" width=100%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/List_Recipes_bvjtqr.jpg" alt="List Recipe" width=100%/></td>
+        </tr>
+        <tr>
+            <td>Filter Recipes by Category</td>
+            <td>Edit Profile</td>
+        </tr>
+        <tr>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246828/pijar-food-assets/ss-pijar-food-mobile/Filter_Recipes_k5ibzu.jpg" alt="Filter Recipe by Category" width=100%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/Edit_Profile_nim0bq.jpg" alt="Edit Profile" width=100%/></td>
+        </tr>
+        <tr>
+            <td>My Recipes</td>
+            <td>Edit & Delete Recipe</td>
+        </tr>
+        <tr>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718247466/pijar-food-assets/ss-pijar-food-mobile/My_Recipes_o182w0.jpg" alt="My Recipe" width=100%></td>
+            <td><image src="https://res.cloudinary.com/dpasid4jl/image/upload/v1718246831/pijar-food-assets/ss-pijar-food-mobile/Edit_Delete_Recipe_ai70z8.jpg" alt="Edit & Delete Recipe" width=100%/></td>
+        </tr>
+    </table>  
+</p>
 
-# OR using Yarn
-yarn ios
-```
+## Contribution
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+Contributions that make the open source community the best place to learn and create. Every contribution you make is valuable.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b your/branch`)
+3. Commit your Changes (`git commit -m 'Add some new feature'`)
+4. Push to the Branch (`git push origin feature/yourbranch`)
+5. Open a Pull Request
 
-## Step 3: Modifying your App
+## Related Project
 
-Now that you have successfully run the app, let's modify it.
+- [`Pijar Food Mobile Download`](https://drive.google.com/file/d/1K99DPe7h_4NGWsueDqpKEDLqm2gAZC0B/view?usp=sharing)
+- [`Pijar Food Backend Repository`](https://github.com/muhabby/BE-Pijar-Food)
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+## Contact
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+Feel free to connect with me for future collaborations [Muhabby Mulya](https://github.com/muhabby)
 
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+<p align="right">(<a href="#top">back to top</a>)</p>
