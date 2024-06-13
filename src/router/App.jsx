@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unstable-nested-components */
 import * as React from 'react';
-import {View, Text, Button} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -11,13 +9,18 @@ import Home from '../pages/Home';
 import DetailMenu from '../pages/DetailMenu';
 import ListMenu from '../pages/ListMenu';
 import EditMenu from '../pages/EditMenu';
-import Chat from '../pages/Chat';
+import SearchMenu from '../pages/SearchMenu';
 import Profile from '../pages/Profile';
 import Login from '../pages/Login';
 import Regist from '../pages/Regist';
 import {useSelector} from 'react-redux';
 import MyRecipe from '../pages/MyRecipe';
 import EditProfile from '../pages/EditProfile';
+import DetailMenuUser from '../pages/DetailMenuUser';
+import ListDessert from '../pages/ListDessert';
+import ListMainCourse from '../pages/ListMainCourse';
+import ListAppetizer from '../pages/ListAppetizer';
+import SplashScreen from 'react-native-splash-screen';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +39,42 @@ function HomeScreen() {
       <Stack.Screen
         name="ListMenu"
         component={ListMenu}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="DetailMenu"
+        component={DetailMenu}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ListDessert"
+        component={ListDessert}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ListMainCourse"
+        component={ListMainCourse}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ListAppetizer"
+        component={ListAppetizer}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function SearchScreen() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Search"
+      screenOptions={{
+        animation: 'none',
+      }}>
+      <Stack.Screen
+        name="SearchMenu"
+        component={SearchMenu}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -91,8 +130,8 @@ function ProfileScreen() {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="DetailMenu"
-        component={DetailMenu}
+        name="DetailMenuUser"
+        component={DetailMenuUser}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -139,22 +178,22 @@ function MainScreen() {
         }}
       />
       <Tab.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{
+          tabBarLabel: 'SearchScreen',
+          tabBarIcon: ({color}) => (
+            <Ionicons name="search-outline" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="AddMenu"
         component={AddMenu}
         options={{
           tabBarLabel: 'AddMenu',
           tabBarIcon: ({color}) => (
             <Ionicons name="add-circle-outline" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Chat"
-        component={Chat}
-        options={{
-          tabBarLabel: 'Chat',
-          tabBarIcon: ({color}) => (
-            <Ionicons name="chatbubble-outline" color={color} size={26} />
           ),
         }}
       />
@@ -176,6 +215,18 @@ const AuthStack = createNativeStackNavigator();
 
 function Router() {
   const auth = useSelector(state => state.auth);
+  const [hideSplash, setHideSplash] = React.useState(false);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setHideSplash(true);
+    }, 2000);
+  }, []);
+
+  React.useEffect(() => {
+    hideSplash && SplashScreen.hide();
+  }, [hideSplash]);
+
   return (
     <NavigationContainer>
       <AuthStack.Navigator>

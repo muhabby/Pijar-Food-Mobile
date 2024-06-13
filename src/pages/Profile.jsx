@@ -1,21 +1,21 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 import {authLogout} from '../redux/action/auth';
-import {getUserById} from '../redux/action/user';
+import {getUsers} from '../redux/action/users';
 import {useFocusEffect} from '@react-navigation/native';
 import {ActivityIndicator} from 'react-native-paper';
 
 const Profile = ({route, navigation}) => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.auth);
+  const auth = useSelector(state => state.auth);
+  const userDetail = useSelector(state => state.users_detail);
 
-  const data = user.data.id;
+  const id = auth.data.data.id;
 
   // useEffect(() => {
   //   dispatch(getUserById(data));
@@ -23,19 +23,17 @@ const Profile = ({route, navigation}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(getUserById(data));
-    }, []),
+      dispatch(getUsers(id));
+    }, [dispatch, id]),
   );
 
   // NOT SOLVE NEED IMPROVE
-
-  console.log(data);
 
   return (
     <View style={styles.body}>
       {/* Profile */}
       <View style={styles.profile}>
-        {user.isSuccess && user.data ? (
+        {userDetail.isSuccess && userDetail.data ? (
           <View
             style={{
               alignItems: 'center',
@@ -44,9 +42,9 @@ const Profile = ({route, navigation}) => {
               // backgroundColor: 'red',
               marginHorizontal: 30,
             }}>
-            {user?.data?.data.profile_picture ? (
+            {userDetail?.data.profile_picture ? (
               <Image
-                source={{uri: user?.data?.data.profile_picture}}
+                source={{uri: userDetail?.data.profile_picture}}
                 style={{
                   width: 120,
                   height: 120,
@@ -71,16 +69,25 @@ const Profile = ({route, navigation}) => {
                 color: 'white',
                 fontFamily: 'Poppins-SemiBold',
               }}>
-              {user?.data?.data.full_name}
+              {userDetail?.data?.full_name}
             </Text>
           </View>
         ) : (
           // Loading
-          <ActivityIndicator
-            size={50}
-            color="#EFC81A"
-            style={{paddingTop: 30}}
-          />
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '95%',
+              // backgroundColor: 'red',
+              marginHorizontal: 30,
+            }}>
+            <ActivityIndicator
+              size={50}
+              color="white"
+              style={{paddingTop: 30}}
+            />
+          </View>
         )}
         <View
           style={{
@@ -98,7 +105,7 @@ const Profile = ({route, navigation}) => {
         <View style={{marginVertical: 2}}>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('EditProfile', {id: user?.data?.id})
+              navigation.navigate('EditProfile', {id: userDetail?.data?.id})
             }>
             <View
               style={{
@@ -136,7 +143,7 @@ const Profile = ({route, navigation}) => {
         <View style={{marginVertical: 2}}>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('MyRecipe', {user_id: user?.data?.data.id})
+              navigation.navigate('MyRecipe', {user_id: userDetail?.data?.id})
             }>
             <View
               style={{
@@ -156,7 +163,7 @@ const Profile = ({route, navigation}) => {
                     color: 'black',
                     fontFamily: 'Poppins-Medium',
                   }}>
-                  My Recipe
+                  My Recipes
                 </Text>
               </View>
               <Ionicons
@@ -171,7 +178,7 @@ const Profile = ({route, navigation}) => {
         <View style={styles.line} />
 
         {/* Saved Recipe */}
-        <View style={{marginVertical: 2}}>
+        {/* <View style={{marginVertical: 2}}>
           <TouchableOpacity>
             <View
               style={{
@@ -201,12 +208,12 @@ const Profile = ({route, navigation}) => {
               />
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
-        <View style={styles.line} />
+        {/* <View style={styles.line} /> */}
 
         {/* Liked Recipe */}
-        <View style={{marginVertical: 2}}>
+        {/* <View style={{marginVertical: 2}}>
           <TouchableOpacity>
             <View
               style={{
@@ -238,7 +245,7 @@ const Profile = ({route, navigation}) => {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.line} />
+        <View style={styles.line} /> */}
 
         {/* Logout */}
         <View style={{marginVertical: 2}}>

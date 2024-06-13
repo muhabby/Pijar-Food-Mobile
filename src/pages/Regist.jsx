@@ -10,6 +10,8 @@ import {
   TextInput,
   TouchableHighlight,
   ScrollView,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -19,7 +21,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const Regist = ({navigation}) => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
-  const auth = useSelector(state => state.auth);
+  const auth_regist = useSelector(state => state.auth_regist);
   const [inputData, setInputData] = useState({
     full_name: '',
     email: '',
@@ -129,12 +131,12 @@ const Regist = ({navigation}) => {
               </View>
             </View>
 
-            {/* Login Button */}
-            <View style={{alignItems: 'center', marginTop: 15}}>
+            {/* Regist Button */}
+            <View style={{alignItems: 'center'}}>
               <TouchableHighlight
                 underlayColor={'#b89b1a'}
-                style={styles.LoginButton}
-                onPress={() => dispatch(authRegist(inputData))}>
+                style={styles.registButton}
+                onPress={() => dispatch(authRegist(inputData, navigation))}>
                 <Text
                   style={{
                     fontFamily: 'Poppins-Medium',
@@ -148,8 +150,23 @@ const Regist = ({navigation}) => {
           </View>
         </View>
 
+        {auth_regist.isError ? (
+          <View style={{alignItems: 'center'}}>
+            <View style={styles.errorAlert}>
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Medium',
+                  fontSize: 12,
+                  color: '#d85730',
+                }}>
+                {auth_regist.errorMessage ?? ' - '}
+              </Text>
+            </View>
+          </View>
+        ) : null}
+
         {/* Already have an account? */}
-        <View style={{flexDirection: 'row', paddingVertical: 40}}>
+        <View style={{flexDirection: 'row', marginBottom: 40, marginTop: 20}}>
           <Text
             style={{
               fontFamily: 'Poppins-Medium',
@@ -173,6 +190,22 @@ const Regist = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
+
+        <Modal
+          transparent={true}
+          animationType="none"
+          visible={auth_regist?.isLoading}
+          onRequestClose={() => {}}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0,0,0,0.5)',
+            }}>
+            <ActivityIndicator size={50} color="#EFC81A" />
+          </View>
+        </Modal>
       </View>
     </ScrollView>
   );
@@ -216,10 +249,19 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     textAlignVertical: 'center',
   },
-  LoginButton: {
+  registButton: {
     height: 50,
     width: '100%',
     backgroundColor: '#EFC81A',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    marginTop: 20,
+  },
+  errorAlert: {
+    height: 50,
+    width: '100%',
+    // backgroundColor: '#d85730',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 15,

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   Text,
   StyleSheet,
@@ -20,9 +20,9 @@ const ListMenu = ({route, navigation}) => {
   const dispatch = useDispatch();
   const menu = useSelector(state => state.menu_get);
 
-  useEffect(() => {
-    dispatch(getMenu());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getMenu());
+  // }, [dispatch]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -50,7 +50,7 @@ const ListMenu = ({route, navigation}) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          List Menu
+          List Recipes
         </Text>
         <View>
           <Ionicons name="chevron-back-outline" color="white" size={28} />
@@ -100,7 +100,10 @@ const ListMenu = ({route, navigation}) => {
                           color: 'black',
                           fontFamily: 'Poppins-Medium',
                         }}>
-                        {item.title}
+                        {item.title.replace(/\n/g, ' ').length > 15
+                          ? item.title.replace(/\n/g, ' ').substring(0, 15) +
+                            '...'
+                          : item.title.replace(/\n/g, ' ')}
                       </Text>
                       <Text
                         style={{
@@ -138,7 +141,7 @@ const ListMenu = ({route, navigation}) => {
         </ScrollView>
       ) : (
         // Loading
-        <ActivityIndicator size={50} color="#EFC81A" style={{paddingTop: 30}} />
+        <ActivityIndicator size={50} color="#EFC81A" style={{flex: 1}} />
       )}
     </View>
   );
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
     // marginVertical: 10,
     paddingHorizontal: 15,
     paddingVertical: 15,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#ffffff',
     borderColor: '#EFC81A',
     borderWidth: 1,
     borderRadius: 10,

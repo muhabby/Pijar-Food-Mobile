@@ -1,58 +1,48 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   ImageBackground,
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
-  TouchableHighlight,
-  Alert,
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-  MenuProvider,
-} from 'react-native-popup-menu';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteMenu, getMenuDetail} from '../redux/action/menu';
+import {getMenuDetail} from '../redux/action/menu';
 import {useFocusEffect} from '@react-navigation/native';
 
 const DetailMenu = ({route, navigation}) => {
   const dispatch = useDispatch();
   const menu_detail = useSelector(state => state.menu_detail);
 
-  useEffect(() => {
-    dispatch(getMenuDetail(route?.params.id));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getMenuDetail(route?.params.id));
+  // }, []);
 
   useFocusEffect(
     React.useCallback(() => {
       dispatch(getMenuDetail(route?.params.id));
-    }, []),
+    }, [dispatch, route?.params.id]),
   );
 
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  // const [isBookmarked, setIsBookmarked] = useState(false);
+  // const [isLiked, setIsLiked] = useState(false);
 
-  const toggleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-  };
-  const toggleLike = () => {
-    setIsLiked(!isLiked);
-  };
+  // const toggleBookmark = () => {
+  //   setIsBookmarked(!isBookmarked);
+  // };
+  // const toggleLike = () => {
+  //   setIsLiked(!isLiked);
+  // };
 
   return (
-    <MenuProvider style={styles.body}>
-      <ScrollView>
-        {menu_detail.isSuccess && menu_detail.data ? (
+    <View style={styles.body}>
+      {menu_detail.isSuccess && menu_detail.data ? (
+        <ScrollView>
           <View>
             <View
               style={{backgroundColor: 'black', height: 450, width: '100%'}}>
@@ -81,84 +71,6 @@ const DetailMenu = ({route, navigation}) => {
                       size={25}
                     />
                   </TouchableOpacity>
-
-                  {/* 3 Dots button */}
-                  <Menu>
-                    <MenuTrigger>
-                      <View
-                        style={{
-                          height: 35,
-                          width: 35,
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          justifyContent: 'space-evenly',
-                        }}>
-                        <View style={styles.threeDotsButton} />
-                        <View style={styles.threeDotsButton} />
-                        <View style={styles.threeDotsButton} />
-                      </View>
-                    </MenuTrigger>
-                    <MenuOptions>
-                      <MenuOption
-                        onSelect={() =>
-                          navigation.navigate('EditMenu', {
-                            id: menu_detail.data.id,
-                          })
-                        }
-                        style={{
-                          marginTop: 10,
-                          height: 45,
-                          justifyContent: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            fontSize: 15,
-                            color: '#000000',
-                            fontFamily: 'Poppins-Medium',
-                            paddingHorizontal: 15,
-                          }}>
-                          Edit
-                        </Text>
-                      </MenuOption>
-                      <MenuOption
-                        onSelect={() => {
-                          Alert.alert(
-                            'Confirm',
-                            'Are you sure you want to delete this recipe?',
-                            [
-                              {
-                                text: 'Cancel',
-                                // style: 'cancel',
-                              },
-                              {
-                                text: 'Delete',
-                                onPress: () => {
-                                  dispatch(
-                                    deleteMenu(menu_detail.data.id, navigation),
-                                  );
-                                },
-                              },
-                            ],
-                            {cancelable: true},
-                          );
-                        }}
-                        style={{
-                          height: 45,
-                          justifyContent: 'center',
-                          marginBottom: 10,
-                        }}>
-                        <Text
-                          style={{
-                            fontSize: 15,
-                            color: '#df0b0b',
-                            fontFamily: 'Poppins-Medium',
-                            paddingHorizontal: 15,
-                          }}>
-                          Delete
-                        </Text>
-                      </MenuOption>
-                    </MenuOptions>
-                  </Menu>
                 </View>
 
                 <View
@@ -189,7 +101,7 @@ const DetailMenu = ({route, navigation}) => {
                   </View>
 
                   {/* Like n Bookmark */}
-                  <View
+                  {/* <View
                     style={{
                       flexDirection: 'row',
                     }}>
@@ -226,7 +138,7 @@ const DetailMenu = ({route, navigation}) => {
                         />
                       </View>
                     </TouchableHighlight>
-                  </View>
+                  </View> */}
                 </View>
               </ImageBackground>
             </View>
@@ -263,16 +175,12 @@ const DetailMenu = ({route, navigation}) => {
               </View>
             </View>
           </View>
-        ) : (
-          // Loading
-          <ActivityIndicator
-            size={50}
-            color="#EFC81A"
-            style={{paddingTop: 30}}
-          />
-        )}
-      </ScrollView>
-    </MenuProvider>
+        </ScrollView>
+      ) : (
+        // Loading
+        <ActivityIndicator size={50} color="#EFC81A" style={{flex: 1}} />
+      )}
+    </View>
   );
 };
 

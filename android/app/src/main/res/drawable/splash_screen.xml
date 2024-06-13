@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@android:color/white"/> <!-- Ganti dengan warna latar belakang splash screen Anda -->
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/screen"/> <!-- Ganti dengan gambar splash screen Anda -->
+    </item>
+</layer-list>

@@ -17,11 +17,18 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const logger = createLogger({});
 
-export default () => {
-  const store = createStore(persistedReducer, applyMiddleware(logger, thunk));
-  const persistor = persistStore(store);
-  return {
-    store,
-    persistor,
-  };
-};
+// export default () => {
+//   const store = createStore(persistedReducer, applyMiddleware(thunk, logger));
+//   const persistor = persistStore(store);
+//   return {
+//     store,
+//     persistor,
+//   };
+// };
+
+export let store = createStore(
+  persistedReducer,
+  applyMiddleware(thunk, logger)
+);
+
+export let persistor = persistStore(store);

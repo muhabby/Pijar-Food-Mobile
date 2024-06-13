@@ -10,6 +10,8 @@ import {
   TextInput,
   TouchableHighlight,
   ScrollView,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -75,7 +77,7 @@ const Login = ({navigation}) => {
             </Text>
           </View>
 
-          {/* Email */}
+          {/* Form */}
           <View style={{marginTop: 30, paddingHorizontal: 10}}>
             {/* Email Bar */}
             <View style={{alignItems: 'center'}}>
@@ -86,6 +88,9 @@ const Login = ({navigation}) => {
                   style={styles.searchInput}
                   placeholder="Email"
                   placeholderTextColor="#C4C4C4"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoComplete="email"
                 />
               </View>
             </View>
@@ -115,7 +120,7 @@ const Login = ({navigation}) => {
               </View>
             </View>
 
-            <TouchableOpacity style={{marginTop: 15}}>
+            {/* <TouchableOpacity style={{marginTop: 15}}>
               <Text
                 style={{
                   fontFamily: 'Poppins-Medium',
@@ -125,13 +130,13 @@ const Login = ({navigation}) => {
                 }}>
                 Forgot Password?
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             {/* Login Button */}
             <View style={{alignItems: 'center'}}>
               <TouchableHighlight
                 underlayColor={'#b89b1a'}
-                style={styles.LoginButton}
+                style={styles.loginButton}
                 onPress={() => dispatch(authLogin(inputData))}>
                 <Text
                   style={{
@@ -146,8 +151,23 @@ const Login = ({navigation}) => {
           </View>
         </View>
 
+        {auth.isError ? (
+          <View style={{alignItems: 'center'}}>
+            <View style={styles.errorAlert}>
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Medium',
+                  fontSize: 12,
+                  color: '#d85730',
+                }}>
+                {auth.errorMessage ?? ' - '}
+              </Text>
+            </View>
+          </View>
+        ) : null}
+
         {/* Dont Have Account */}
-        <View style={{flexDirection: 'row', paddingVertical: 40}}>
+        <View style={{flexDirection: 'row', marginBottom: 40, marginTop: 20}}>
           <Text
             style={{
               fontFamily: 'Poppins-Medium',
@@ -171,6 +191,22 @@ const Login = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
+
+        <Modal
+          transparent={true}
+          animationType="none"
+          visible={auth?.isLoading}
+          onRequestClose={() => {}}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0,0,0,0.5)',
+            }}>
+            <ActivityIndicator size={50} color="#EFC81A" />
+          </View>
+        </Modal>
       </View>
     </ScrollView>
   );
@@ -214,10 +250,19 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     textAlignVertical: 'center',
   },
-  LoginButton: {
+  loginButton: {
     height: 50,
     width: '100%',
     backgroundColor: '#EFC81A',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    marginTop: 20,
+  },
+  errorAlert: {
+    height: 50,
+    width: '100%',
+    // backgroundColor: '#d85730',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 15,

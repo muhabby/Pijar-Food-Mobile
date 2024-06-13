@@ -1,11 +1,12 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {Picker} from '@react-native-picker/picker';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   ActivityIndicator,
   Image,
+  Modal,
   PermissionsAndroid,
   ScrollView,
   StyleSheet,
@@ -19,6 +20,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'react-native-image-picker';
 import {useDispatch, useSelector} from 'react-redux';
 import {getMenuDetail, updateMenu} from '../redux/action/menu';
+import {useFocusEffect} from '@react-navigation/native';
 
 const EditMenu = ({route, navigation}) => {
   const menu_detail = useSelector(state => state.menu_detail);
@@ -46,9 +48,15 @@ const EditMenu = ({route, navigation}) => {
       }
     : null;
 
-  useEffect(() => {
-    dispatch(getMenuDetail(route?.params.id));
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(getMenuDetail(route?.params.id));
+    }, [dispatch, route?.params.id]),
+  );
+
+  // useEffect(() => {
+  //   dispatch(getMenuDetail(route?.params.id));
+  // }, [dispatch, route?.params.id]);
 
   const updateData = event => {
     let bodyData = new FormData();
@@ -135,9 +143,9 @@ const EditMenu = ({route, navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.body}>
+    <View style={styles.body}>
       {menu_detail.isSuccess && menu_detail.data ? (
-        <View>
+        <ScrollView>
           {/* Title */}
           <Text style={styles.title}>Edit Your Recipe</Text>
 
@@ -335,7 +343,7 @@ const EditMenu = ({route, navigation}) => {
           {/* Update Button */}
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity
-              style={styles.PostButton}
+              style={styles.updateButton}
               onPress={() => updateData()}>
               <Text
                 style={{
@@ -347,12 +355,27 @@ const EditMenu = ({route, navigation}) => {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </ScrollView>
       ) : (
         // Loading
-        <ActivityIndicator size={50} color="#EFC81A" style={{paddingTop: 30}} />
+        <ActivityIndicator size={50} color="#EFC81A" style={{flex: 1}} />
       )}
-    </ScrollView>
+      <Modal
+        transparent={true}
+        animationType="none"
+        visible={menu_update?.isLoading}
+        onRequestClose={() => {}}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <ActivityIndicator size={50} color="#EFC81A" />
+        </View>
+      </Modal>
+    </View>
   );
 };
 
@@ -424,7 +447,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
   },
-  PostButton: {
+  updateButton: {
     marginVertical: 40,
     height: 50,
     justifyContent: 'center',

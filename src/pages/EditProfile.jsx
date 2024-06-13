@@ -11,17 +11,22 @@ import {
   TouchableHighlight,
   ScrollView,
   PermissionsAndroid,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {updateUser} from '../redux/action/menu';
+import {clearErrorUpdateUsers, updateUsers} from '../redux/action/users';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'react-native-image-picker';
+import {useFocusEffect} from '@react-navigation/native';
+import {getUsers} from '../redux/action/users';
 
 const EditProfile = ({route, navigation}) => {
   const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
-  const auth = useSelector(state => state.auth.data);
+  const auth = useSelector(state => state.auth);
+  const usersDetail = useSelector(state => state.users_detail);
+  const users_update = useSelector(state => state.users_update);
   const [photo, setPhoto] = useState(null);
   const [inputData, setInputData] = useState({
     full_name: '',
@@ -35,23 +40,36 @@ const EditProfile = ({route, navigation}) => {
         name: photo.fileName,
         type: photo.type,
       }
-    : auth.data.data?.photo
+    : usersDetail?.data?.photo
     ? {
-        uri: auth.data.data.photo,
+        uri: usersDetail?.data?.photo,
         name: 'photo',
         type: 'image/jpeg',
       }
     : null;
+
+  const id = auth.data.data.id;
 
   const updateData = async () => {
     let bodyData = new FormData();
     bodyData.append('full_name', inputData.full_name);
     bodyData.append('email', inputData.email);
     bodyData.append('password', inputData.password);
-    bodyData.append('photo', photoData);
+    bodyData.append('profile_picture', photoData);
 
-    dispatch(updateUser(route?.params.id, bodyData, navigation));
+    dispatch(updateUsers(bodyData, navigation));
   };
+
+  // useEffect(() => {
+  //   dispatch(getUserById(data));
+  // }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(getUsers(id));
+      dispatch(clearErrorUpdateUsers());
+    }, [dispatch, id]),
+  );
 
   const onChange = (key, value) => {
     setInputData({...inputData, [key]: value});
@@ -127,207 +145,211 @@ const EditProfile = ({route, navigation}) => {
     setPhoto(null);
   };
 
-  const PasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
-    <ScrollView style={styles.body}>
-      {auth?.data ? (
-        <View>
-          {/* Image */}
-          {auth?.data?.profile_picture ? (
-            <ImageBackground
-              source={{uri: auth?.data?.profile_picture}}
-              resizeMode="cover"
-              style={styles.image}>
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  height: '5%',
-                  borderTopRightRadius: 20,
-                  borderTopLeftRadius: 20,
-                }}
-              />
-            </ImageBackground>
-          ) : (
-            <View>
-              {photo ? (
-                <ImageBackground
-                  source={{uri: photo.uri}}
-                  resizeMode="cover"
-                  style={styles.image}>
-                  <View
-                    style={{
-                      backgroundColor: 'white',
-                      height: '5%',
-                      borderTopRightRadius: 20,
-                      borderTopLeftRadius: 20,
-                    }}
-                  />
-                </ImageBackground>
-              ) : (
-                <ImageBackground
-                  source={require('../../assets/picture/3.jpg')}
-                  resizeMode="cover"
-                  style={styles.image}>
-                  <View
-                    style={{
-                      backgroundColor: 'white',
-                      height: '5%',
-                      borderTopRightRadius: 20,
-                      borderTopLeftRadius: 20,
-                    }}
-                  />
-                </ImageBackground>
-              )}
-            </View>
-          )}
+    <View style={styles.body}>
+      {usersDetail?.data ? (
+        <ScrollView>
+          <View>
+            {/* Image */}
+            {photo ? (
+              <ImageBackground
+                source={{uri: photo.uri}}
+                resizeMode="cover"
+                style={styles.image}>
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    height: '5%',
+                    borderTopRightRadius: 20,
+                    borderTopLeftRadius: 20,
+                  }}
+                />
+              </ImageBackground>
+            ) : (
+              <ImageBackground
+                source={{uri: usersDetail?.data?.profile_picture}}
+                resizeMode="cover"
+                style={styles.image}>
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    height: '5%',
+                    borderTopRightRadius: 20,
+                    borderTopLeftRadius: 20,
+                  }}
+                />
+              </ImageBackground>
+            )}
 
-          {/* Form */}
-          <View style={styles.form}>
-            <View style={{paddingHorizontal: 10}}>
-              {/* Photo Bar */}
-              <View style={{alignItems: 'center'}}>
-                {photo ? (
-                  <View style={styles.searchBar}>
-                    <Ionicons name="image-outline" color="#EFC81A" size={25} />
-                    <Text
-                      onChangeText={newValue => onChange('email', newValue)}
-                      style={{
-                        fontFamily: 'Poppins-Medium',
-                        fontSize: 13,
-                        color: 'black',
-                        height: 50,
-                        width: '73%',
-                        marginLeft: 15,
-                        paddingTop: 15,
-                        alignItems: 'center',
-                      }}>
-                      {photo.fileName.length > 20
-                        ? photo.fileName.substring(0, 20) + '...'
-                        : photo.fileName}
-                    </Text>
-                    <TouchableOpacity
-                      onPress={deletePhoto}
-                      style={{
-                        height: 35,
-                        width: 40,
-                        backgroundColor: '#ee5e5e',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                      }}>
-                      <Ionicons name="close-outline" color="white" size={20} />
-                    </TouchableOpacity>
-                  </View>
-                ) : (
-                  <View style={styles.searchBar}>
-                    <Ionicons name="image-outline" color="#EFC81A" size={25} />
-                    <Text
-                      onChangeText={newValue => onChange('email', newValue)}
-                      style={{
-                        fontFamily: 'Poppins-Medium',
-                        fontSize: 13,
-                        color: '#C4C4C4',
-                        height: 50,
-                        width: '73%',
-                        marginLeft: 15,
-                        paddingTop: 15,
-                        alignItems: 'center',
-                      }}>
-                      Photo
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => galleryLaunch()}
-                      style={{
-                        height: 35,
-                        width: 40,
-                        backgroundColor: '#EFC81A',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                      }}>
-                      <Ionicons name="share-outline" color="white" size={20} />
-                    </TouchableOpacity>
-                  </View>
-                )}
-              </View>
-
-              {/* Full Name Bar */}
-              <View style={{alignItems: 'center', marginTop: 15}}>
-                <View style={styles.searchBar}>
-                  <Ionicons name="person-outline" color="#EFC81A" size={25} />
-                  <TextInput
-                    onChangeText={newValue => onChange('full_name', newValue)}
-                    style={styles.searchInput}
-                    placeholder="Name"
-                    placeholderTextColor="#C4C4C4"
-                    defaultValue={auth?.data?.full_name}
-                  />
+            {/* Form */}
+            <View style={styles.form}>
+              <View style={{paddingHorizontal: 10}}>
+                {/* Photo */}
+                <View style={{alignItems: 'center'}}>
+                  {photo ? (
+                    <View style={styles.inputColumnBar}>
+                      <Ionicons
+                        name="image-outline"
+                        color="#EFC81A"
+                        size={25}
+                      />
+                      <Text
+                        onChangeText={newValue => onChange('email', newValue)}
+                        style={{
+                          fontFamily: 'Poppins-Medium',
+                          fontSize: 13,
+                          color: 'black',
+                          height: 50,
+                          width: '73%',
+                          marginLeft: 15,
+                          paddingTop: 15,
+                          alignItems: 'center',
+                        }}>
+                        {photo.fileName.length > 20
+                          ? photo.fileName.substring(0, 20) + '...'
+                          : photo.fileName}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={deletePhoto}
+                        style={{
+                          height: 35,
+                          width: 40,
+                          backgroundColor: '#ee5e5e',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderRadius: 10,
+                        }}>
+                        <Ionicons
+                          name="close-outline"
+                          color="white"
+                          size={20}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    <View style={styles.inputColumnBar}>
+                      <Ionicons
+                        name="image-outline"
+                        color="#EFC81A"
+                        size={25}
+                      />
+                      <Text
+                        onChangeText={newValue => onChange('email', newValue)}
+                        style={{
+                          fontFamily: 'Poppins-Medium',
+                          fontSize: 13,
+                          color: '#C4C4C4',
+                          height: 50,
+                          width: '73%',
+                          marginLeft: 15,
+                          paddingTop: 15,
+                          alignItems: 'center',
+                        }}>
+                        Photo
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => galleryLaunch()}
+                        style={{
+                          height: 35,
+                          width: 40,
+                          backgroundColor: '#EFC81A',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderRadius: 10,
+                        }}>
+                        <Ionicons
+                          name="share-outline"
+                          color="white"
+                          size={20}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  )}
                 </View>
-              </View>
 
-              {/* Email Bar */}
-              <View style={{alignItems: 'center', marginTop: 15}}>
-                <View style={styles.searchBar}>
-                  <Ionicons name="mail-outline" color="#EFC81A" size={25} />
-                  <TextInput
-                    onChangeText={newValue => onChange('email', newValue)}
-                    style={styles.searchInput}
-                    placeholder="Email"
-                    placeholderTextColor="#C4C4C4"
-                    defaultValue={auth?.data?.email}
-                  />
-                </View>
-              </View>
-
-              {/* Password Bar */}
-              <View style={{alignItems: 'center', marginTop: 15}}>
-                <View style={styles.searchBar}>
-                  <Ionicons
-                    name="lock-closed-outline"
-                    color="#EFC81A"
-                    size={25}
-                  />
-                  <TextInput
-                    onChangeText={newValue => onChange('password', newValue)}
-                    secureTextEntry={!showPassword}
-                    style={styles.searchInput}
-                    placeholder="New Password"
-                    placeholderTextColor="#C4C4C4"
-                  />
-                  <TouchableOpacity onPress={PasswordVisibility}>
-                    <Ionicons
-                      name={showPassword ? 'eye-outline' : 'eye-off-outline'}
-                      color="#EFC81A"
-                      size={25}
+                {/* Full Name */}
+                <View style={{alignItems: 'center', marginTop: 15}}>
+                  <View style={styles.inputColumnBar}>
+                    <Ionicons name="person-outline" color="#EFC81A" size={25} />
+                    <TextInput
+                      onChangeText={newValue => onChange('full_name', newValue)}
+                      style={styles.inputBar}
+                      placeholder="Name"
+                      placeholderTextColor="#C4C4C4"
+                      defaultValue={usersDetail?.data?.full_name}
                     />
-                  </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
 
-              {/* Update Button */}
-              <View style={{alignItems: 'center'}}>
-                <TouchableHighlight
-                  underlayColor={'#b89b1a'}
-                  style={styles.LoginButton}
-                  onPress={() => dispatch(updateData(inputData))}>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Medium',
-                      fontSize: 16,
-                      color: 'white',
-                    }}>
-                    Update
-                  </Text>
-                </TouchableHighlight>
+                {/* Email */}
+                <View style={{alignItems: 'center', marginTop: 15}}>
+                  <View style={styles.inputColumnBar}>
+                    <Ionicons name="mail-outline" color="#EFC81A" size={25} />
+                    <TextInput
+                      onChangeText={newValue => onChange('email', newValue)}
+                      style={styles.inputBar}
+                      placeholder="Email"
+                      placeholderTextColor="#C4C4C4"
+                      defaultValue={usersDetail?.data?.email}
+                    />
+                  </View>
+                </View>
+
+                {/* Update Button */}
+                <View style={{alignItems: 'center'}}>
+                  <TouchableHighlight
+                    underlayColor={'#b89b1a'}
+                    style={styles.updateButton}
+                    onPress={() => dispatch(updateData(inputData))}>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Medium',
+                        fontSize: 16,
+                        color: 'white',
+                      }}>
+                      Update
+                    </Text>
+                  </TouchableHighlight>
+                </View>
+
+                {users_update.isError ? (
+                  <View style={{alignItems: 'center'}}>
+                    <View style={styles.errorAlert}>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Medium',
+                          fontSize: 12,
+                          color: '#d85730',
+                        }}>
+                        {users_update.errorMessage ?? ' - '}
+                      </Text>
+                    </View>
+                  </View>
+                ) : null}
               </View>
             </View>
           </View>
+        </ScrollView>
+      ) : (
+        // Loading
+        <ActivityIndicator size={50} color="#EFC81A" style={{flex: 1}} />
+      )}
+      <Modal
+        transparent={true}
+        animationType="none"
+        visible={users_update?.isLoading}
+        onRequestClose={() => {}}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <ActivityIndicator size={50} color="#EFC81A" />
         </View>
-      ) : null}
-    </ScrollView>
+      </Modal>
+    </View>
   );
 };
 
@@ -348,7 +370,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 30,
   },
-  searchBar: {
+  inputColumnBar: {
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
     flexDirection: 'row',
@@ -358,7 +380,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 15,
   },
-  searchInput: {
+  inputBar: {
     fontFamily: 'Poppins-Medium',
     fontSize: 13,
     height: 50,
@@ -368,7 +390,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     textAlignVertical: 'center',
   },
-  LoginButton: {
+  updateButton: {
     height: 50,
     width: '100%',
     backgroundColor: '#EFC81A',
@@ -376,6 +398,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 15,
     marginTop: 20,
+  },
+  errorAlert: {
+    height: 50,
+    width: '100%',
+    // backgroundColor: '#d85730',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    marginTop: 15,
   },
 });
 
